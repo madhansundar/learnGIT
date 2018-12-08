@@ -1,0 +1,263 @@
+<html>
+   <head>
+      <link href = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-classic/resources/theme-classic-all.css" 
+         rel = "stylesheet" />
+      <script type = "text/javascript" 
+         src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
+		  <script type="text/javascript" src="jquery-latest.min.js"></script>
+     
+      <script type="text/javascript" src="jquery.mark.min.js"></script>
+      
+      <script type = "text/javascript">
+
+
+
+	 Ext.onReady(function() {
+	 
+
+	 
+	 
+				$("button").click(function(){
+        $(".hideClass").toggleClass("VisibilityHiddenClass");
+		
+		$("body").unmark({
+      done: function() {
+        $("body").mark(keyword, options);
+      }
+    });
+    });
+
+
+		  ctrl = false;
+  document.addEventListener("keydown", function(e){
+    if(e.which == 17){
+      ctrl = true;
+    }
+    if(e.which == 70 && ctrl == true){
+    console.log("CTRL+F");
+     $(".hideClass").toggleClass("VisibilityHiddenClass");
+    
+
+      e.preventDefault();
+      
+    }
+  }, true);
+    
+  document.addEventListener("keyup", function(e){
+    if(e.which == 17){
+      ctrl = false;
+      
+    }
+  });
+
+  
+  
+
+
+  var mark = function() {
+
+    // Read the keyword
+    var keyword = $("input[name='keyword']").val();
+
+    // Determine selected options
+    var options = {};
+   
+
+    // Remove previous marked elements and mark
+    // the new keyword inside the context
+    $("body").unmark({
+      done: function() {
+        $("body").mark(keyword, options);
+      }
+    });
+  };
+
+  $("input[name='keyword']").on("input", mark);
+  $("input[type='checkbox']").on("change", mark);
+
+});	 
+	  
+	  
+Ext.define('Fiddle.grid.plugin.Clipboard',{
+override: 'Ext.grid.plugin.Clipboard',
+
+
+beforepaste: Ext.emptyFn,
+
+mixins: [
+    'Ext.mixin.Observable'
+],
+
+constructor: function(config) {
+    var me = this;
+
+    me.callParent([config]);
+    me.mixins.observable.constructor.call(me);
+},
+
+privates : {
+    onPaste: function (keyCode, event) {
+        var me = this,
+            sharedData = me.shared.data,
+            source = me.getSource(),
+            i, n, s;
+
+        if (me.validateAction(event) === false) {
+            return;
+        }
+
+
+        if (me.fireEvent('beforepaste',keyCode,event,me.cmp) !== false) {                            
+
+            if (source) {
+                for (i = 0, n = source.length; i < n; ++i) {
+                    s = source[i];
+
+
+                    if (s === 'system') {
+                        // get the format used by the system clipboard. 
+                        s = me.getSystem();
+                        me.pasteClipboardData(s);
+                        break;
+                    } else if (sharedData && (s in sharedData)) {
+                        me.doPaste(s, sharedData[s]);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+});
+
+
+Ext.define('UserController', {
+extend : 'Ext.app.ViewController',
+alias: 'controller.users',
+
+onBeforePaste:function(keyCode,event,grid){
+    //Perform custom logic
+    console.log(grid)
+    return false;
+}
+});
+
+
+Ext.application({
+name: 'Fiddle',
+
+
+launch: function() {
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['name', 'email', 'phone'],
+        data: [{
+            name: 'Lisa',
+            email: 'lisa@simpsons.com',
+            phone: '555-111-1224'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '555-222-1234'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }]
+    });
+
+
+    Ext.create('Ext.grid.Panel', {
+        title: 'Simpsons',
+        store: store,
+        controller:'users',
+        width: 400,
+        renderTo: Ext.getBody(),
+        columns: [{
+            text: 'Name',
+            dataIndex: 'name'
+        }, {
+            text: 'Email',
+            dataIndex: 'email',
+            flex: 1
+        }, {
+            text: 'Phone',
+            dataIndex: 'phone'
+        }],
+        plugins: {
+            ptype: 'cellediting',
+            clicksToEdit: 2
+        },
+        selModel: {
+            type: 'spreadsheet',
+            rowNumbererHeaderWidth: 0
+        },
+        plugins: [{
+            ptype: 'clipboard',
+            listeners: {
+                beforepaste: 'onBeforePaste'
+            }
+        }],
+        listeners: {
+            selectionchange: function(grid, selection, eOpts) {
+                var store = grid.getStore();
+            }
+        }
+    });
+}
+});
+
+
+
+      </script>
+   </head>
+   
+   <body>
+   <div class="context">
+		<div class="search row hideClass VisibilityHiddenClass">
+      <div class="col-xs-6">
+        <span>Type in a keyword:</span>
+        <input type="text" name="keyword" class="form-control input-sm" placeholder="Lorem ipsum...">
+		<button onclick="HideSearch();" style="color: black;">X</button>
+      </div>
+	  
+     
+    </div>
+      <div id = "helloWorldPanel" />
+	  
+	  
+	  </div>
+   </body>
+   
+   
+   <style>
+		div.search span,
+div.search input[name="keyword"] {
+  display: block;
+}
+
+div.search input[name="keyword"] {
+  margin-top: 4px;
+}
+
+div.panel {
+  margin-bottom: 15px;
+}
+
+div.panel .panel-body p:last-child {
+  margin-bottom: 0;
+}
+
+mark {
+  padding: 0;
+}
+
+.VisibilityHiddenClass {
+	visibility:hidden;
+}
+
+   </style>
+</html>

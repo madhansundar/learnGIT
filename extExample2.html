@@ -1,0 +1,113 @@
+<html>
+   <head>
+      <link href = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-classic/resources/theme-classic-all.css" 
+         rel = "stylesheet" />
+      <script type = "text/javascript" 
+         src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
+		  <script type="text/javascript" src="jquery-latest.min.js"></script>
+     
+      <script type="text/javascript" src="jquery.mark.min.js"></script>
+      
+      <script type = "text/javascript">
+
+
+
+	 Ext.onReady(function() {
+
+Ext.create("Ext.form.Panel",
+ {
+ title : "Controls",
+ items : [
+ {
+ xtype : "radiogroup",
+ fieldLabel : "Title",
+ vertical:true,columns:1,
+ items : [
+ {boxLabel:"Mr",name:"title"},
+ {boxLabel:"Ms",name:"title"}
+ ]
+ },
+ {
+ xtype : "textfield",
+ fieldLabel : "Name"
+ },
+ {
+ xtype : "datefield",
+ fieldLabel : "Date of birth"
+ },
+ {
+ xtype : "textfield",
+ fieldLabel : "Blog"
+ },
+ {
+ xtype : "numberfield",
+ fieldLabel : "Years of experience",
+ minValue : 5,
+ maxValue : 15
+ },
+ {
+ xtype : "textarea",
+ fieldLabel : "Address"
+ },
+ {
+ xtype : "button",
+ text : "Submit"
+ }
+ ],
+ });
+ 
+ 
+ 
+ });
+
+
+
+      </script>
+   </head>
+   
+   <body>
+   <div class="context">
+		<div class="search row hideClass VisibilityHiddenClass">
+      <div class="col-xs-6">
+        <span>Type in a keyword:</span>
+        <input type="text" name="keyword" class="form-control input-sm" placeholder="Lorem ipsum...">
+		<button onclick="HideSearch();" style="color: black;">X</button>
+      </div>
+	  
+     
+    </div>
+      <div id = "helloWorldPanel" />
+	  
+	  
+	  </div>
+   </body>
+   
+   
+   <style>
+		div.search span,
+div.search input[name="keyword"] {
+  display: block;
+}
+
+div.search input[name="keyword"] {
+  margin-top: 4px;
+}
+
+div.panel {
+  margin-bottom: 15px;
+}
+
+div.panel .panel-body p:last-child {
+  margin-bottom: 0;
+}
+
+mark {
+  padding: 0;
+}
+
+.VisibilityHiddenClass {
+	visibility:hidden;
+}
+
+   </style>
+</html>
