@@ -1,0 +1,86 @@
+<html>
+   <head>
+      <link href = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-classic/resources/theme-classic-all.css" 
+         rel = "stylesheet" />
+      <script type = "text/javascript" 
+         src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
+      <script type = "text/javascript">
+         Ext.onReady(function() {
+         var parent = document.getElementById("parentDiv");
+         var opar = document.getElementById('gridId').innerHTML;
+         
+         
+         function myFunction() {
+         var gridValue = this.value;
+          var gridId = document.getElementById("gridId");
+          gridValue = gridValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+         
+         var re = new RegExp(gridValue, 'g');
+         var m;
+         
+         if (gridValue.length > 0)
+           gridId.innerHTML = opar.replace(re, "<mark>$&</mark>");
+         else gridId.innerHTML = opar; 
+		 
+		 //opar.replace(/this.value/g,'<mark>'+this.value+'<mark>');
+		 
+          
+          
+         } // function ends
+         
+           var ctrl = false;
+         document.addEventListener("keydown", function(e){
+         console.log("key down");
+           if(e.which == 17){
+             ctrl = true;
+           }
+           if(e.which == 70 && ctrl == true){
+           console.log("CTRL+F");
+         var checkInput = document.getElementById("inputId");
+         if(checkInput==null){
+         	var input = document.createElement("input");
+         input.type = "text";
+         input.id = "inputId"; // set the CSS class
+         input.addEventListener("input", myFunction);
+         parent.appendChild(input);
+         }
+         
+         
+         
+             e.preventDefault();
+             
+           }
+         }, true);
+           
+         document.addEventListener("keyup", function(e){
+           if(e.which == 17){
+             ctrl = false;
+             
+           }
+         });
+         
+         });
+              
+      </script>
+   </head>
+   <body>
+      <div id="parentDiv">
+         <div id="gridId">
+            sadsad asdsadsadsad ad sad asadsadsa32123 sadsad a sa d 
+            <div class="test">asdsadsad </div>
+            sadasd asdsad yteurytt wqer ewr wtr trtqret re
+            <table>
+               <th>TEst</th>
+               <th>TEst</th>
+               <tbody>
+                  <tr>
+                     <td>sadasdsadasdssd</td>
+                  <tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
+   <style>
+   </style>
+</html>
